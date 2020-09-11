@@ -41,7 +41,7 @@ public class BootStrap implements CommandLineRunner {
         customerRepository.save(cust4);
 
         System.out.println("Data Loaded +" + customerRepository.count());
-        //Customer cust5 = customerRepository.findByCustomerName("Mannat");
+        //Customer cust5 = customerRepository.findByCustomerName("Man");
         //System.out.println("Customer + "+ cust5.getCity());
 
     }
