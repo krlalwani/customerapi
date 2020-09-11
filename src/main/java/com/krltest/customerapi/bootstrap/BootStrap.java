@@ -16,22 +16,22 @@ public class BootStrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Customer cust1 = new Customer();
-        cust1.setCustomerName("Kumar");
+        cust1.setCustomerName("Kum");
         cust1.setCity("Mumbai");
         cust1.setPin(400071);
 
         Customer cust2 = new Customer();
-        cust2.setCustomerName("Ashok");
+        cust2.setCustomerName("Ash");
         cust2.setCity("Ulhasnagar");
         cust2.setPin(421003);
 
         Customer cust3 = new Customer();
-        cust3.setCustomerName("Mannat");
+        cust3.setCustomerName("Man");
         cust3.setCity("Goregaon");
         cust3.setPin(400063);
 
         Customer cust4 = new Customer();
-        cust4.setCustomerName("Urvi");
+        cust4.setCustomerName("Ur");
         cust4.setCity("NCPA");
         cust4.setPin(400021);
 
