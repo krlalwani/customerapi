@@ -11,6 +11,8 @@ public interface CustomerService {
     List<CustomerDTO> getAllCustomers();
 
     CustomerDTO getByCustomerName(String name);
-    void createNewCustomer(Customer customer);
+    void createNewCustomer(CustomerDTO customerDTO);
     void deleteCustomer(String name);
+    CustomerDTO editCustomer(CustomerDTO customerDTO);
+    CustomerDTO editCustomerByName(CustomerDTO customerDTO, String name);
 }

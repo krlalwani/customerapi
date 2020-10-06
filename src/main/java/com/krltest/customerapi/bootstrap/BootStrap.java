@@ -1,5 +1,6 @@
 package com.krltest.customerapi.bootstrap;
 
+import com.krltest.customerapi.api.model.CustomerDTO;
 import com.krltest.customerapi.domain.Customer;
 import com.krltest.customerapi.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;

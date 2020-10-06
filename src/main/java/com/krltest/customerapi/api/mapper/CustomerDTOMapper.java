@@ -8,13 +8,12 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface CustomerMapper {
-    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
+public interface CustomerDTOMapper {
+    CustomerDTOMapper INSTANCE = Mappers.getMapper(CustomerDTOMapper.class);
     @Mappings({
-            @Mapping(source = "customerName", target = "custName"),
-            @Mapping(source = "pin", target = "pincode")
+            @Mapping(source = "custName", target = "customerName"),
+            @Mapping(source = "pincode", target = "pin")
     })
-    CustomerDTO customerToCustomerDTO(Customer customer);
-
+    Customer customerDTOToCustomer(CustomerDTO customerDTO);
 
 }

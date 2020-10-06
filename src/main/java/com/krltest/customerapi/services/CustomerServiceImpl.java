@@ -1,10 +1,10 @@
 package com.krltest.customerapi.services;
 
+import com.krltest.customerapi.api.mapper.CustomerDTOMapper;
 import com.krltest.customerapi.api.mapper.CustomerMapper;
 import com.krltest.customerapi.api.model.CustomerDTO;
 import com.krltest.customerapi.domain.Customer;
 import com.krltest.customerapi.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerMapper customerMapper;
+    private final CustomerDTOMapper customerDTOMapper;
     private final CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerMapper customerMapper, CustomerDTOMapper customerDTOMapper, CustomerRepository customerRepository) {
         this.customerMapper = customerMapper;
+        this.customerDTOMapper = customerDTOMapper;
         this.customerRepository = customerRepository;
     }
 
@@ -33,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll()
                 .stream()
                 .map(customer ->{
-                          CustomerDTO customerDTO = customerMapper.custToCustomerDTO(customer);
+                          CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
                           return customerDTO;
                               })
                 .collect(Collectors.toList());
@@ -41,23 +43,36 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO getByCustomerName(String name) {
-        //return null; //for testing in interim
-        return customerMapper.custToCustomerDTO(customerRepository.findByCustomerName(name));
+        return customerMapper.customerToCustomerDTO(customerRepository.findByCustomerName(name));
     }
 
     @Override
-    public void createNewCustomer(Customer customer) {
-        System.out.println("Arg customer ..."+customer.getCustomerName());
-        customerRepository.save(customer);
-        System.out.println("New Data Loaded +" + customerRepository.count());
-        //System.out.println("Customer retrieved!.."+customerMapper.customerDTOToCust(customerDTO).getCustomerName());
-        //Customer customer = customerRepository.save(customerMapper.customerDTOToCust(customerDTO));
-
+    public void createNewCustomer(CustomerDTO customerDTO) {
+        customerRepository.save(customerDTOMapper.customerDTOToCustomer(customerDTO));
     }
 
     @Override
     public void deleteCustomer(String name) {
         Customer customer = customerRepository.findByCustomerName(name);
         customerRepository.delete(customer);
+    }
+
+    @Override
+    public CustomerDTO editCustomer(CustomerDTO customerDTO) {
+        Customer editedCustomer =  customerRepository.save(customerDTOMapper.customerDTOToCustomer(customerDTO));
+        return customerMapper.customerToCustomerDTO(editedCustomer);
+    }
+
+    @Override
+    public CustomerDTO editCustomerByName(CustomerDTO customerDTO, String name) {
+        Customer existingCustomerDetails = customerRepository.findByCustomerName(name);
+        Long existingCustomerId= existingCustomerDetails.getCustId();
+        if(existingCustomerId!=null){
+            Customer revisedCustomerDetails=customerDTOMapper.customerDTOToCustomer(customerDTO);
+            revisedCustomerDetails.setCustId(existingCustomerId);
+            customerRepository.save(revisedCustomerDetails);
+            return customerMapper.customerToCustomerDTO(revisedCustomerDetails);
+        }
+        else return null;
     }
 }
