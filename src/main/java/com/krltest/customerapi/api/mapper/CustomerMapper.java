@@ -15,5 +15,6 @@ public interface CustomerMapper {
             @Mapping(source = "pin", target = "pincode")
     })
     CustomerDTO custToCustomerDTO (Customer customer);
+    Customer customerDTOToCust (CustomerDTO customerDTO);
 
 }
