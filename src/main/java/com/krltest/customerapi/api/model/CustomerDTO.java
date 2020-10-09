@@ -1,9 +1,13 @@
 package com.krltest.customerapi.api.model;
 
+import com.krltest.customerapi.domain.Account;
+import com.krltest.customerapi.domain.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -11,8 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerDTO {
 
-    private Long custId;
-    private String custName;
-    private String city;
-    private int pincode;
+    private Long customerId;
+    private String firstName;
+    //private Set<AddressDTO> address;
+    //private Set<AccountDTO> account;
+
 }
